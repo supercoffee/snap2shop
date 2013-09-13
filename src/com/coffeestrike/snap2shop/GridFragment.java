@@ -1,13 +1,23 @@
 package com.coffeestrike.snap2shop;
 
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 
 public class GridFragment extends Fragment {
 
+	private ArrayList<Bitmap> mImages;
+	private GridAdapter mAdapter;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -16,7 +26,59 @@ public class GridFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.grid, null);
+		GridView g = (GridView) inflater.inflate(R.layout.grid, null);
+		mImages = new ArrayList<Bitmap>();
+		mAdapter = new GridAdapter(getActivity());
+		g.setAdapter(mAdapter);
+
+		return g;
+	}
+	
+	public void addNewItem(Bitmap bitmap){
+		mImages.add(bitmap);
+		mAdapter.notifyDataSetChanged();
+	}
+	
+	private class GridAdapter extends BaseAdapter{
+		private Context mContext;
+		
+		public GridAdapter(Context c){
+			mContext = c;
+		}
+		
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return mImages.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ImageView imageView;
+			if(convertView == null){
+				imageView = new ImageView(mContext);
+			}
+			else{
+				imageView = (ImageView)convertView;
+			}
+			if (mImages != null) {
+				imageView.setImageBitmap(mImages.get(position));
+			}
+			return imageView;
+		}
+		
 	}
 	
 	
