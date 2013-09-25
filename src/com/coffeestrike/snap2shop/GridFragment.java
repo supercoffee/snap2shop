@@ -14,6 +14,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 public class GridFragment extends Fragment {
+	
+	private static String STATE_IMAGES = "mImages";
 
 	private ArrayList<Bitmap> mImages;
 	private GridAdapter mAdapter;
@@ -27,7 +29,13 @@ public class GridFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		GridView g = (GridView) inflater.inflate(R.layout.grid, null);
-		mImages = new ArrayList<Bitmap>();
+		
+		if (savedInstanceState == null) {
+			mImages = new ArrayList<Bitmap>();
+		}
+		else{
+			mImages = (ArrayList<Bitmap>) savedInstanceState.getSerializable(STATE_IMAGES);
+		}
 		mAdapter = new GridAdapter(getActivity());
 		g.setAdapter(mAdapter);
 
@@ -39,6 +47,16 @@ public class GridFragment extends Fragment {
 		mAdapter.notifyDataSetChanged();
 	}
 	
+	
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(STATE_IMAGES, mImages);
+	}
+
+
+
 	private class GridAdapter extends BaseAdapter{
 		private Context mContext;
 		

@@ -68,9 +68,6 @@ public class MainActivity extends FragmentActivity {
 			case REQUEST_CAMERA_TAKE:
 				if (resultCode == RESULT_OK) {
 					Bitmap b = (Bitmap) intent.getExtras().get("data");
-//					TestFragment t = (TestFragment) getSupportFragmentManager()
-//							.findFragmentById(R.id.fragment_container);
-//					t.setImageView(b);
 					GridFragment gridFrag = (GridFragment)getSupportFragmentManager()
 							.findFragmentById(R.id.fragment_container);
 					gridFrag.addNewItem(b);
