@@ -30,6 +30,7 @@ public class GridFragment extends Fragment {
 			Bundle savedInstanceState) {
 		GridView g = (GridView) inflater.inflate(R.layout.grid, null);
 		
+		//this section here will reload the images 
 		if (savedInstanceState == null) {
 			mImages = new ArrayList<Bitmap>();
 		}

@@ -1,4 +1,10 @@
-package com.coffeestrike.snap2shop;
+package Activities;
+
+import com.coffeestrike.snap2shop.GridFragment;
+import com.coffeestrike.snap2shop.R;
+import com.coffeestrike.snap2shop.R.id;
+import com.coffeestrike.snap2shop.R.layout;
+import com.coffeestrike.snap2shop.R.menu;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,6 +13,8 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+//TODO migrate these features to ShoppingListActivity
 
 public class MainActivity extends FragmentActivity {
 	
@@ -78,7 +86,6 @@ public class MainActivity extends FragmentActivity {
 		
 		}
 	}
-	
 	
 
 }
