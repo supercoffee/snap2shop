@@ -2,14 +2,17 @@ package com.coffeestrike.snap2shop;
 
 import java.util.ArrayList;
 
+import activities.ShoppingListActivity;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -23,12 +26,6 @@ public class GridFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		GridView g = (GridView) inflater.inflate(R.layout.grid, null);
 		
 		//this section here will reload the images 
 		if (savedInstanceState == null) {
@@ -37,7 +34,15 @@ public class GridFragment extends Fragment {
 		else{
 			mImages = (ArrayList<Bitmap>) savedInstanceState.getSerializable(STATE_IMAGES);
 		}
-		mAdapter = new GridAdapter(getActivity());
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		GridView g = (GridView) inflater.inflate(R.layout.grid, null);
+		
+		
+		mAdapter = new GridAdapter(getActivity().getApplicationContext(), 0, mImages);
 		g.setAdapter(mAdapter);
 
 		return g;
@@ -56,44 +61,48 @@ public class GridFragment extends Fragment {
 		outState.putSerializable(STATE_IMAGES, mImages);
 	}
 
+	
+	
 
 
-	private class GridAdapter extends BaseAdapter{
-		private Context mContext;
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode !=  Activity.RESULT_OK){
+			return;
+		}
+		switch(requestCode){
+			case ShoppingListActivity.REQUEST_CAMERA_TAKE:
+				//add the new image from the intent to the grid
+				mAdapter.add((Bitmap) data.getExtras().get("data"));
+				break;
+			default:
+				return;
+					
+		}
+	}
+
+
+
+
+
+	private class GridAdapter extends ArrayAdapter<Bitmap>{
 		
-		public GridAdapter(Context c){
-			mContext = c;
-		}
-		
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return mImages.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			return 0;
+		public GridAdapter(Context applicationContext, int i
+				, ArrayList<Bitmap> images) {
+			super(applicationContext, i, images);
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ImageView imageView;
-			if(convertView == null){
-				imageView = new ImageView(mContext);
+			if(convertView == null){ //create a new view
+				imageView = new ImageView(getContext());
 			}
-			else{
-				imageView = (ImageView)convertView;
+			else{ //reuse the old view
+				imageView = (ImageView) convertView;
 			}
 			if (mImages != null) {
-				imageView.setImageBitmap(mImages.get(position));
+				imageView.setImageBitmap(getItem(position));
 			}
 			return imageView;
 		}

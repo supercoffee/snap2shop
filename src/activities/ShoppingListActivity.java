@@ -1,33 +1,40 @@
-package Activities;
-
-import com.coffeestrike.snap2shop.GridFragment;
-import com.coffeestrike.snap2shop.R;
-import com.coffeestrike.snap2shop.R.id;
-import com.coffeestrike.snap2shop.R.layout;
-import com.coffeestrike.snap2shop.R.menu;
+package activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-//TODO migrate these features to ShoppingListActivity
+import com.coffeestrike.snap2shop.GridFragment;
+import com.coffeestrike.snap2shop.R;
 
-public class MainActivity extends FragmentActivity {
+public class ShoppingListActivity extends FragmentActivity {
 	
 	public static final int REQUEST_CAMERA_TAKE = 1;
+//	private Fragment mGridFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.fragment_container);
 		
-		getSupportFragmentManager().beginTransaction()
+		FragmentManager fm = getSupportFragmentManager();
+	
+		Fragment frag = fm.findFragmentById(R.id.fragment_container);
+		/*
+		 * Very important to check for this, otherwise the fragment
+		 * will be created again and overlaid atop an existing one
+		 */
+		if(frag == null){
+			fm.beginTransaction()
 			.add(R.id.fragment_container, new GridFragment())
 			.commit();
+		}
 	}
 
 	@Override
@@ -58,7 +65,7 @@ public class MainActivity extends FragmentActivity {
 			 * settings activity.
 			 */
 			case R.id.action_settings:
-				return true;
+				return false;
 				
 			//Defer action to superclass method.
 			default:
@@ -86,6 +93,5 @@ public class MainActivity extends FragmentActivity {
 		
 		}
 	}
-	
 
 }

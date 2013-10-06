@@ -4,5 +4,7 @@
     <string name="app_name">Snap 2 Shop</string>
     <string name="action_settings">Settings</string>
     <string name="action_snap">Snap picture</string>
+    <string name="my_fridge">My Fridge</string>
+    <string name="shopping_list">Shopping List</string>
 
 </resources>
