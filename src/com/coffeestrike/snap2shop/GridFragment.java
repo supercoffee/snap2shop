@@ -2,7 +2,8 @@ package com.coffeestrike.snap2shop;
 
 import java.util.ArrayList;
 
-import activities.ShoppingListActivity;
+import com.coffeestrike.snap2shop.activities.ShoppingListActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +24,7 @@ public class GridFragment extends Fragment {
 	private ArrayList<Bitmap> mImages;
 	private GridAdapter mAdapter;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

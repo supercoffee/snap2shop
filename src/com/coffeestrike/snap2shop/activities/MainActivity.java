@@ -1,4 +1,4 @@
-package activities;
+package com.coffeestrike.snap2shop.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
